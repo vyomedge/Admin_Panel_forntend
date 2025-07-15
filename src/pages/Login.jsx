@@ -21,7 +21,11 @@ const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const onSubmit = (data) => {
     console.log('login Data',data)
-    // Simulated login logic
+     if (data.company === 'poornam') {
+    // Send login to Poornam backend
+  } else if (data.company === 'vyomedge') {
+    // Send login to VyomEdge backend
+  }
    
   };
 
@@ -198,6 +202,51 @@ const Login = () => {
                 }}
               />
             </Box>
+
+<Box sx={{ mb: 3 }}>
+  <Typography
+    variant="body2"
+    sx={{
+      fontFamily: 'Akatab, Sans-serif',
+      color: '#2c3e50',
+      mb: 1,
+      fontWeight: 500,
+    }}
+  >
+    Select Company
+  </Typography>
+  <TextField
+    fullWidth
+    select
+    SelectProps={{ native: true }}
+    variant="outlined"
+    {...register('company', { required: 'Company is required' })}
+    error={!!errors.company}
+    helperText={errors.company?.message}
+    sx={{
+      '& .MuiOutlinedInput-root': {
+        borderRadius: 2,
+        backgroundColor: '#ffffff',
+        fontFamily: 'Akatab, Sans-serif',
+        '& fieldset': {
+          borderColor: '#e0e0e0',
+        },
+        '&:hover fieldset': {
+          borderColor: '#D7A10F',
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: '#D7A10F',
+        },
+      },
+    }}
+  >
+    <option value=""> Select Company </option>
+    <option value="poornam">Poornam Events</option>
+    <option value="vyomedge">VyomEdge Solutions</option>
+  </TextField>
+</Box>
+
+
 
             {/* Submit Button */}
             <Button
