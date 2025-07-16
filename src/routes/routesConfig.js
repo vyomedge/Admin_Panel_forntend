@@ -3,8 +3,6 @@ import Layout2 from '../layouts/Layout2';
 import RoutingList from '../components/RoutingList';
 import ProtectedRoute from '../components/ProtectedRoute';
 import Login from '../pages/Login';
-import Signup from '../pages/Signup';
-
 import Dashboard from '../pages/Dashboard';
 
 const routesConfig = [
@@ -18,17 +16,18 @@ const routesConfig = [
     ],
   },
   {
-    element: <Layout2 />,
+    element: (
+      <ProtectedRoute>
+        <Layout2 />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: '/dashboard',
-        element: (
-          <ProtectedRoute>
-            <RoutingList Component={Dashboard} />
-          </ProtectedRoute>
-        ),
+        element: <RoutingList Component={Dashboard} />,
       },
     ],
   },
 ];
+
 export default routesConfig;

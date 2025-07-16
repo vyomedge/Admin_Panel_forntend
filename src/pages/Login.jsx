@@ -15,17 +15,30 @@ import {
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { apiClient } from '../lib/api-client';
 
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
+
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { register, handleSubmit, formState: { errors } } = useForm();
   const onSubmit = async (data) => {
-    console.log(data)
-    await apiClient.post("/api/auth/login", data);
+    try {
+      const res = await apiClient.post("/api/auth/login", data);
 
+      const { token } = res.data;
 
+      Cookies.set("Admin_access", token, { expires: 7 });
+
+      navigate("/dashboard");
+
+    } catch (err) {
+      console.error("Login error:", err.response?.data || err.message);
+    }
   };
+
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
