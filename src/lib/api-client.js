@@ -1,5 +1,6 @@
 import axios from "axios"
-import { HOST } from "@/utils/constants"
+import { HOST } from "../utils/constant"
+console.log(HOST)
 const apiClient = axios.create({
     baseURL:HOST,
     withCredentials: true,

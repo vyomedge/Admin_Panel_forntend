@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import {useForm} from 'react-hook-form';
-import { 
-  Box, 
-  TextField, 
-  Button, 
-  Typography, 
-  Container, 
+import { useForm } from 'react-hook-form';
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  Container,
   Paper,
   InputAdornment,
   IconButton,
@@ -13,20 +13,18 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { apiClient } from '../lib/api-client';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const onSubmit = (data) => {
-    console.log('login Data',data)
-     if (data.company === 'poornam') {
-    // Send login to Poornam backend
-  } else if (data.company === 'vyomedge') {
-    // Send login to VyomEdge backend
-  }
-   
+  const onSubmit = async (data) => {
+    console.log(data)
+    await apiClient.post("/api/auth/login", data);
+
+
   };
 
   const handleTogglePassword = () => {
@@ -36,14 +34,14 @@ const Login = () => {
   return (
     <Box
       sx={{
-        minHeight: {xs:'70vh', md: '70vh', lg: '95vh'},
+        minHeight: { xs: '70vh', md: '70vh', lg: '95vh' },
         // background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         padding: 0,
         fontFamily: 'Akatab, Sans-serif',
-        
+
       }}
     >
       <Container maxWidth="lg">
@@ -69,10 +67,10 @@ const Login = () => {
               flexDirection: 'column',
               justifyContent: 'center',
               backgroundColor: '#f8f9fa',
-              order: isMobile ? 2 : 1, 
+              order: isMobile ? 2 : 1,
             }}
           >
-           
+
             <Box sx={{ mb: 4 }}>
               <Typography
                 variant="h6"
@@ -103,173 +101,174 @@ const Login = () => {
             >
               Login
             </Typography>
-            <form onSubmit={handleSubmit(onSubmit)}noValidate>
-            <Box sx={{ mb: 3 }}>
-              <Typography
-                variant="body2"
-                sx={{
-                  fontFamily: 'Akatab, Sans-serif',
-                  color: '#2c3e50',
-                  mb: 1,
-                  fontWeight: 500,
-                }}
-              >
-                Email
-              </Typography>
-              <TextField
-                fullWidth
-                variant="outlined"
-                {...register('email',{required: 'Email is required',
-                  pattern:{
-                    value:/^\S+@\S+$/i,
-                    message:'Enter a valid email'
-                  }
-                })}
-                error={!!errors.email}
-                helperText={errors.email?.message}
-                sx={{
-                  '& .MuiOutlinedInput-root': {
-                    borderRadius: 2,
-                    backgroundColor: '#ffffff',
+            <form onSubmit={handleSubmit(onSubmit)} noValidate>
+              <Box sx={{ mb: 3 }}>
+                <Typography
+                  variant="body2"
+                  sx={{
                     fontFamily: 'Akatab, Sans-serif',
-                    '& fieldset': {
-                      borderColor: '#e0e0e0',
+                    color: '#2c3e50',
+                    mb: 1,
+                    fontWeight: 500,
+                  }}
+                >
+                  Email
+                </Typography>
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  {...register('email', {
+                    required: 'Email is required',
+                    pattern: {
+                      value: /^\S+@\S+$/i,
+                      message: 'Enter a valid email'
+                    }
+                  })}
+                  error={!!errors.email}
+                  helperText={errors.email?.message}
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      borderRadius: 2,
+                      backgroundColor: '#ffffff',
+                      fontFamily: 'Akatab, Sans-serif',
+                      '& fieldset': {
+                        borderColor: '#e0e0e0',
+                      },
+                      '&:hover fieldset': {
+                        borderColor: '#D7A10F',
+                      },
+                      '&.Mui-focused fieldset': {
+                        borderColor: '#D7A10F',
+                      },
                     },
-                    '&:hover fieldset': {
-                      borderColor: '#D7A10F',
+                  }}
+                />
+              </Box>
+
+              <Box sx={{ mb: 4 }}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    fontFamily: 'Akatab, Sans-serif',
+                    color: '#2c3e50',
+                    mb: 1,
+                    fontWeight: 500,
+                  }}
+                >
+                  Password
+                </Typography>
+                <TextField
+                  fullWidth
+                  type={showPassword ? 'text' : 'password'}
+                  variant="outlined"
+                  {...register('password', {
+                    required: 'Password is required',
+                    minLength: {
+                      value: 8,
+                      message: 'Password must be at least 8 characters'
+                    }
+                  })}
+                  error={!!errors.password}
+                  helperText={errors.password?.message}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={handleTogglePassword}
+                          edge="end"
+                          sx={{ color: '#7f8c8d' }}
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      borderRadius: 2,
+                      backgroundColor: '#ffffff',
+                      fontFamily: 'Akatab, Sans-serif',
+                      '& fieldset': {
+                        borderColor: '#e0e0e0',
+                      },
+                      '&:hover fieldset': {
+                        borderColor: '#D7A10F',
+                      },
+                      '&.Mui-focused fieldset': {
+                        borderColor: '#D7A10F',
+                      },
                     },
-                    '&.Mui-focused fieldset': {
-                      borderColor: '#D7A10F',
+                  }}
+                />
+              </Box>
+
+              <Box sx={{ mb: 3 }}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    fontFamily: 'Akatab, Sans-serif',
+                    color: '#2c3e50',
+                    mb: 1,
+                    fontWeight: 500,
+                  }}
+                >
+                  Select panel
+                </Typography>
+                <TextField
+                  fullWidth
+                  select
+                  SelectProps={{ native: true }}
+                  variant="outlined"
+                  {...register('panel', { required: 'panel is required' })}
+                  error={!!errors.panel}
+                  helperText={errors.panel?.message}
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      borderRadius: 2,
+                      backgroundColor: '#ffffff',
+                      fontFamily: 'Akatab, Sans-serif',
+                      '& fieldset': {
+                        borderColor: '#e0e0e0',
+                      },
+                      '&:hover fieldset': {
+                        borderColor: '#D7A10F',
+                      },
+                      '&.Mui-focused fieldset': {
+                        borderColor: '#D7A10F',
+                      },
                     },
+                  }}
+                >
+                  <option value=""> Select Company </option>
+                  <option value="event">Poornam Events</option>
+                  <option value="vyomedge">VyomEdge Solutions</option>
+                </TextField>
+              </Box>
+
+
+
+              {/* Submit Button */}
+              <Button
+                fullWidth
+                variant="contained"
+                type="submit"
+                sx={{
+                  backgroundColor: '#D7A10F',
+                  color: '#ffffff',
+                  fontFamily: 'Akatab, Sans-serif',
+                  fontWeight: 600,
+                  py: 1.5,
+                  borderRadius: 50,
+                  textTransform: 'none',
+                  fontSize: '16px',
+                  mb: 3,
+                  '&:hover': {
+                    backgroundColor: '#c4940e',
                   },
                 }}
-              />
-            </Box>
-
-            <Box sx={{ mb: 4 }}>
-              <Typography
-                variant="body2"
-                sx={{
-                  fontFamily: 'Akatab, Sans-serif',
-                  color: '#2c3e50',
-                  mb: 1,
-                  fontWeight: 500,
-                }}
               >
-                Password
-              </Typography>
-              <TextField
-                fullWidth
-                type={showPassword ? 'text' : 'password'}
-                variant ="outlined"
-                {...register('password',{
-                  required:'Password is required',
-                  minLength:{
-                    value:8,
-                    message:'Password must be at least 8 characters'
-                  }
-                })}
-                error={!!errors.password}
-                helperText={errors.password?.message}               
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        onClick={handleTogglePassword}
-                        edge="end"
-                        sx={{ color: '#7f8c8d' }}
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-                sx={{
-                  '& .MuiOutlinedInput-root': {
-                    borderRadius: 2,
-                    backgroundColor: '#ffffff',
-                    fontFamily: 'Akatab, Sans-serif',
-                    '& fieldset': {
-                      borderColor: '#e0e0e0',
-                    },
-                    '&:hover fieldset': {
-                      borderColor: '#D7A10F',
-                    },
-                    '&.Mui-focused fieldset': {
-                      borderColor: '#D7A10F',
-                    },
-                  },
-                }}
-              />
-            </Box>
-
-<Box sx={{ mb: 3 }}>
-  <Typography
-    variant="body2"
-    sx={{
-      fontFamily: 'Akatab, Sans-serif',
-      color: '#2c3e50',
-      mb: 1,
-      fontWeight: 500,
-    }}
-  >
-    Select Company
-  </Typography>
-  <TextField
-    fullWidth
-    select
-    SelectProps={{ native: true }}
-    variant="outlined"
-    {...register('company', { required: 'Company is required' })}
-    error={!!errors.company}
-    helperText={errors.company?.message}
-    sx={{
-      '& .MuiOutlinedInput-root': {
-        borderRadius: 2,
-        backgroundColor: '#ffffff',
-        fontFamily: 'Akatab, Sans-serif',
-        '& fieldset': {
-          borderColor: '#e0e0e0',
-        },
-        '&:hover fieldset': {
-          borderColor: '#D7A10F',
-        },
-        '&.Mui-focused fieldset': {
-          borderColor: '#D7A10F',
-        },
-      },
-    }}
-  >
-    <option value=""> Select Company </option>
-    <option value="poornam">Poornam Events</option>
-    <option value="vyomedge">VyomEdge Solutions</option>
-  </TextField>
-</Box>
-
-
-
-            {/* Submit Button */}
-            <Button
-              fullWidth
-              variant="contained"
-              type="submit"
-              sx={{
-                backgroundColor: '#D7A10F',
-                color: '#ffffff',
-                fontFamily: 'Akatab, Sans-serif',
-                fontWeight: 600,
-                py: 1.5,
-                borderRadius: 50,
-                textTransform: 'none',
-                fontSize: '16px',
-                mb: 3,
-                '&:hover': {
-                  backgroundColor: '#c4940e',
-                },
-              }}
-            >
-              Login 
-            </Button>
+                Login
+              </Button>
             </form>
           </Box>
 
@@ -282,11 +281,11 @@ const Login = () => {
               alignItems: 'center',
               justifyContent: 'center',
               position: 'relative',
-              order: isMobile ? 1 : 2, 
+              order: isMobile ? 1 : 2,
               minHeight: {
                 xs: '120px',
                 sm: '180px',
-                md: '300px', 
+                md: '300px',
               },
               p: 2,
             }}
@@ -297,14 +296,14 @@ const Login = () => {
               alt="logo"
               sx={{
                 maxWidth: {
-                  xs: '40%', 
-                  sm: '55%', 
-                  md: '90%', 
+                  xs: '40%',
+                  sm: '55%',
+                  md: '90%',
                 },
                 maxHeight: {
-                  xs: '40%', 
-                  sm: '50%', 
-                  md: '80%', 
+                  xs: '40%',
+                  sm: '50%',
+                  md: '80%',
                 },
                 width: 'auto',
                 height: 'auto',
