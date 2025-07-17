@@ -4,6 +4,7 @@ import RoutingList from '../components/RoutingList';
 import ProtectedRoute from '../components/ProtectedRoute';
 import Login from '../pages/Login';
 import Dashboard from '../pages/Dashboard';
+import PublicRoute from '../components/PublicRoute';
 
 const routesConfig = [
   {
@@ -11,7 +12,9 @@ const routesConfig = [
     children: [
       {
         path: '/',
-        element: <RoutingList Component={Login} />,
+        element:     <PublicRoute>
+          <RoutingList Component={Login} />
+        </PublicRoute>,
       },
     ],
   },
