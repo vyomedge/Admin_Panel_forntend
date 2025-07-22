@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useForm, FormProvider, Controller } from 'react-hook-form';
+import { apiClient } from '../lib/api-client';
+
 import {
-  Box,
-  Button,
-  TextField,
+  Box,Button,TextField,
   Typography,
   Paper,
   Grid,
@@ -40,7 +40,11 @@ import {
   Person as PersonIcon,
   Category as CategoryIcon
 } from '@mui/icons-material';
-import Description from '../commen-component/BlogForm/Description';
+import ReactQuill from 'react-quill';
+import "react-quill/dist/quill.snow.css";
+import { v4 as uuidv4 } from 'uuid'; 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const BlogForm = () => {
   const theme = useTheme();
@@ -65,9 +69,21 @@ const BlogForm = () => {
     }
   });
 
-  const { handleSubmit, control, setValue, watch, formState: { errors } } = methods;
+  const { handleSubmit, control, setValue, watch, formState: { errors }, reset } = methods;
   const watchedTags = watch('tags') || [];
+  const base64ToFile = (base64String, filename) => {
+  const arr = base64String.split(',');
+  const mime = arr[0].match(/:(.*?);/)[1];
+  const bstr = atob(arr[1]);
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
 
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+
+  return new File([u8arr], filename, { type: mime });
+};
   const categories = [
     'Technology', 'Design', 'Business', 'Marketing', 'Development',
     'Lifestyle', 'Travel', 'Food', 'Health', 'Education'
@@ -84,7 +100,7 @@ const BlogForm = () => {
       };
       reader.readAsDataURL(file);
     }
-  };
+  };    
 
   const addTag = () => {
     if (currentTag.trim() && !watchedTags.includes(currentTag.trim()) && watchedTags.length < 10) {
@@ -97,28 +113,67 @@ const BlogForm = () => {
     setValue('tags', watchedTags.filter(tag => tag !== tagToRemove));
   };
 
-  const generateUID = () => {
-    const title = watch('title');
-    if (title) {
-      const uid = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-      setValue('uid', uid);
-    }
-  };
+ 
 
-  const onSubmit = async (data) => {
-    setIsSubmitting(true);
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      console.log('✅ Blog created:', data);
-      setSubmitSuccess(true);
-      setTimeout(() => setSubmitSuccess(false), 3000);
-    } catch (error) {
-      console.error('❌ Error creating blog:', error);
-    } finally {
-      setIsSubmitting(false);
+
+
+const onSubmit = async (data) => {
+  setIsSubmitting(true);
+  try {
+    const formData = new FormData();
+
+    formData.append("title", data.title);
+    formData.append("authorName", data.authorName);
+    formData.append("uid", uuidv4());
+
+    formData.append("category", data.category);
+    formData.append("description", data.description);
+    // Tags
+    data.tags.forEach((tag, index) => {
+      formData.append(`tags[${index}]`, tag);
+    });
+
+    // Featured Image
+    if (data.featuredImage?.url) {
+      const imageFile = base64ToFile(data.featuredImage.url, 'featured-image.png');
+      formData.append("featuredImage", imageFile);
     }
-  };
+formData.append("featuredImageAlt", data.featuredImage?.altText || "");
+
+
+    // Meta Fields
+    formData.append("meta[title]", data.meta.title);
+    formData.append("meta[description]", data.meta.description);
+    formData.append("meta[keywords]", data.meta.keywords);
+    formData.append("meta[canonicalUrl]", data.meta.canonicalUrl);
+
+    // OG Tags
+    formData.append("ogTags[title]", data.ogTags.title);
+    formData.append("ogTags[description]", data.ogTags.description);
+    formData.append("status", data.status);
+
+    const res = await apiClient.post('/api/blogs', formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    console.log(' Blog created:', res.data);
+    
+    setSubmitSuccess(true);
+    setTimeout(() => setSubmitSuccess(false), 3000);
+    toast.success('Blog submitted successfully!');
+    reset(); // reset form fields
+setPreviewImage(null); 
+
+  } catch (error) {
+     toast.error('Something went wrong while submitting!');
+    console.error('Error creating blog:', error.response?.data || error.message);
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
 
   return (
     <Box 
@@ -224,8 +279,24 @@ const BlogForm = () => {
                             />
                           )}
                         />
-                        <Description/>
-                        {/* <Controller
+                        
+                          <Typography variant="h6">Description</Typography>
+      <Controller
+        name="description"
+        control={control}
+        rules={{ required: "Description is required" }}
+        render={({ field }) => (
+          <ReactQuill
+            className="custom-quill"
+            theme="snow"
+            {...field}
+          />
+        )}
+      />
+      {errors.description && (
+        <Typography color="error">{errors.description.message}</Typography>
+      )}
+                {/* <Controller
                           name="description"
                           control={control}
                           rules={{ required: 'Description is required' }}
@@ -248,7 +319,7 @@ const BlogForm = () => {
                             />
                             
                           )}
-                        /> */}
+                        />  */}
                       </Stack>
                     </CardContent>
                   </Card>
@@ -270,15 +341,15 @@ const BlogForm = () => {
                             control={control}
                             rules={{ required: 'Category is required' }}
                             render={({ field }) => (
-                              <FormControl fullWidth error={!!errors.category}>
-                                <InputLabel>Category</InputLabel>
+                              <FormControl  error={!!errors.category} fullWidth>
+                                <InputLabel >Category</InputLabel>
                                 <Select
                                   {...field}
                                   label="Category"
-                                  sx={{ borderRadius: 2 }}
+                                  sx={{ borderRadius: 10,  width:"170px"}}
                                 >
                                   {categories.map((cat) => (
-                                    <MenuItem key={cat} value={cat}>
+                                    <MenuItem sx={{ borderRadius: 10 }} key={cat} value={cat}>
                                       {cat}
                                     </MenuItem>
                                   ))}
@@ -298,7 +369,7 @@ const BlogForm = () => {
                               onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())}
                               sx={{
                                 '& .MuiOutlinedInput-root': {
-                                  borderRadius: 2,
+                                  
                                   '&:hover fieldset': { borderColor: 'primary.main' }
                                 }
                               }}
@@ -309,6 +380,9 @@ const BlogForm = () => {
                               sx={{ 
                                 bgcolor: 'primary.main', 
                                 color: 'white',
+                                width: 40,
+                                height: 40,
+                                borderRadius: 50,
                                 '&:hover': { bgcolor: 'primary.dark' }
                               }}
                             >
@@ -349,46 +423,15 @@ const BlogForm = () => {
                       </Stack>
 
                       <Stack spacing={3}>
-                        <Stack direction="row" spacing={2}>
-                          <Controller
-                            name="uid"
-                            control={control}
-                            rules={{ required: 'URL slug is required' }}
-                            render={({ field }) => (
-                              <TextField
-                                {...field}
-                                fullWidth
-                                label="URL Slug"
-                                error={!!errors.uid}
-                                helperText={errors.uid?.message}
-                                sx={{
-                                  '& .MuiOutlinedInput-root': {
-                                    borderRadius: 2,
-                                    '&:hover fieldset': { borderColor: 'primary.main' }
-                                  }
-                                }}
-                              />
-                            )}
-                          />
-                          <Button 
-                            onClick={generateUID} 
-                            variant="outlined" 
-                            sx={{ 
-                              minWidth: 120, 
-                              borderRadius: 2,
-                              textTransform: 'none' 
-                            }}
-                          >
-                            Generate
-                          </Button>
-                        </Stack>
+                      
 
                         <Box>
                           <input
                             accept="image/*"
-                            style={{ display: 'none' }}
+                            style={{ display: 'none'}}
                             id="featured-image-upload"
                             type="file"
+                            
                             onChange={handleImageUpload}
                           />
                           <label htmlFor="featured-image-upload">
@@ -414,9 +457,9 @@ const BlogForm = () => {
                                 src={previewImage} 
                                 alt="Preview" 
                                 style={{
-                                  width: '100%',
+                                  width: '250px',
                                   maxHeight: '300px',
-                                  objectFit: 'cover',
+                                  objectFit: 'centre',
                                   borderRadius: '12px'
                                 }}
                               />
@@ -543,6 +586,7 @@ const BlogForm = () => {
                           </Stack>
                         </AccordionDetails>
                       </Accordion>
+                   
 
                       <Accordion elevation={0} sx={{ '&:before': { display: 'none' } }}>
                         <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ px: 0 }}>
@@ -588,15 +632,50 @@ const BlogForm = () => {
                                 />
                               )}
                             />
+                            <Controller
+  name="ogTags.image"
+  control={control}
+  render={({ field }) => (
+    <TextField
+      {...field}
+      fullWidth
+      label="OG Image URL"
+      size="small"
+      sx={{
+        '& .MuiOutlinedInput-root': {
+          borderRadius: 2,
+          '&:hover fieldset': { borderColor: 'primary.main' }
+        }
+      }}
+    />
+  )}
+/>
+
                           </Stack>
                         </AccordionDetails>
                       </Accordion>
+                      <FormControl fullWidth sx={{ mt: 3 }}>
+  <InputLabel>Status</InputLabel>
+  <Controller
+    name="status"
+    control={control}
+    defaultValue="Draft"
+    render={({ field }) => (
+      <Select {...field} label="Status">
+        <MenuItem value="Draft">Draft</MenuItem>
+        <MenuItem value="Published">Published</MenuItem>
+        <MenuItem value="Scheduled">Scheduled</MenuItem>
+      </Select>
+    )}
+  />
+</FormControl>
+
                     </CardContent>
                   </Card>
                 </Stack>
               </Grid>
             </Grid>
-
+              
             {/* Submit Button */}
             <Box mt={2}>
               <Card sx={{ width: { xs: '100%', md: '100%', lg: '25%', xl: '25%' }, borderRadius: 3, overflow: 'hidden' }}>
