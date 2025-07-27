@@ -13,11 +13,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import { apiClient } from "../../lib/api-client";
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 export default function BlogListGrid() {
   const [listData, setListData] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
-const navigate = useNavigate();
+  const navigate = useNavigate();
   React.useEffect(() => {
     fetchData();
   }, []);
@@ -39,19 +39,18 @@ const navigate = useNavigate();
   };
 
   const handleEdit = (id) => {
-    navigate(`/editblog/${id}`)
+    navigate(`/editblog/${id}`);
   };
 
   const handleDelete = (id) => {
-      apiClient
-        .delete(`/api/blogs/${id}`)
-        .then(() => fetchData())
-        .catch((err) => alert("Failed to delete"));
+    apiClient
+      .delete(`/api/blogs/${id}`)
+      .then(() => fetchData())
+      .catch((err) => alert("Failed to delete"));
   };
 
   const handleCreate = () => {
-     navigate('/editblog/id');
-
+    navigate("/editblog/id");
   };
 
   const columns = [
@@ -90,10 +89,16 @@ const navigate = useNavigate();
       sortable: false,
       renderCell: (params) => (
         <>
-          <IconButton onClick={() => handleEdit(params.row._id)} color="primary">
+          <IconButton
+            onClick={() => handleEdit(params.row._id)}
+            color="primary"
+          >
             <EditIcon />
           </IconButton>
-          <IconButton onClick={() => handleDelete(params.row._id)} color="error">
+          <IconButton
+            onClick={() => handleDelete(params.row._id)}
+            color="error"
+          >
             <DeleteIcon />
           </IconButton>
         </>
