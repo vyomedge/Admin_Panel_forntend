@@ -5,7 +5,8 @@ import ProtectedRoute from "../components/ProtectedRoute";
 import Login from "../pages/Login";
 import Dashboard from "../pages/Dashboard";
 import PublicRoute from "../components/PublicRoute";
-import Blog from "../pages/Blog";
+import Blog from "../pages/Blogs/listing";
+import AddBlogs from "../pages/Blogs/AddBlog";
 
 const routesConfig = [
   {
@@ -35,6 +36,14 @@ const routesConfig = [
       {
         path: "/blog",
         element: <RoutingList Component={Blog} />,
+      },
+      {
+        path: "/createblogs",
+        element: <RoutingList Component={AddBlogs} />,
+      },
+      {
+        path: "/editblogs/:id",
+        element: <RoutingList Component={AddBlogs} />,
       },
     ],
   },
