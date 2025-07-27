@@ -7,6 +7,7 @@ import Dashboard from "../pages/Dashboard";
 import PublicRoute from "../components/PublicRoute";
 import Blog from "../pages/Blogs/listing";
 import AddBlogs from "../pages/Blogs/AddBlog";
+import EditBlog from "../pages/Blogs/Edit";
 
 const routesConfig = [
   {
@@ -42,8 +43,8 @@ const routesConfig = [
         element: <RoutingList Component={AddBlogs} />,
       },
       {
-        path: "/editblogs/:id",
-        element: <RoutingList Component={AddBlogs} />,
+        path: "/editblog/:id",
+        element: <RoutingList Component={EditBlog} />,
       },
     ],
   },

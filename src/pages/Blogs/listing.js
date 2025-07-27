@@ -39,7 +39,7 @@ const navigate = useNavigate();
   };
 
   const handleEdit = (id) => {
-    console.log("Edit blog", id);
+    navigate(`/editblog/${id}`)
   };
 
   const handleDelete = (id) => {
@@ -50,7 +50,7 @@ const navigate = useNavigate();
   };
 
   const handleCreate = () => {
-     navigate('/createblogs');
+     navigate('/editblog/id');
 
   };
 

@@ -43,7 +43,7 @@
 // } from "@mui/icons-material";
 // import ReactQuill from "react-quill";
 // import "react-quill/dist/quill.snow.css";
-// import { v4 as uuidv4 } from "uuid";
+// 
 // import { toast } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
 // import TextField from "../../commen-component/TextField/TextField";
@@ -539,227 +539,227 @@
 //                 </Stack>
 //               </Grid>
 
-//               {/* SEO Sidebar */}
-//               <Grid item xs={12} lg={4}>
-//                 <Stack spacing={3}>
-//                   {/* SEO Settings */}
-//                   <Card
-//                     elevation={0}
+// {/* SEO Sidebar */}
+// <Grid item xs={12} lg={4}>
+//   <Stack spacing={3}>
+//     {/* SEO Settings */}
+//     <Card
+//       elevation={0}
+//       sx={{
+//         borderRadius: 3,
+//         overflow: "hidden",
+//         position: "sticky",
+//         top: 20,
+//       }}
+//     >
+//       <CardContent sx={{ p: { xs: 3, md: 4 } }}>
+//         <Stack
+//           direction="row"
+//           alignItems="center"
+//           spacing={2}
+//           mb={3}
+//         >
+//           <SettingsIcon color="primary" />
+//           <Typography variant="h6" fontWeight="600">
+//             SEO Settings
+//           </Typography>
+//         </Stack>
+
+//         <Accordion
+//           elevation={0}
+//           sx={{ "&:before": { display: "none" } }}
+//         >
+//           <AccordionSummary
+//             expandIcon={<ExpandMoreIcon />}
+//             sx={{ px: 0 }}
+//           >
+//             <Typography fontWeight="600">Meta Tags</Typography>
+//           </AccordionSummary>
+//           <AccordionDetails sx={{ px: 0 }}>
+//             <Stack spacing={2}>
+//               <Controller
+//                 name="meta.title"
+//                 control={control}
+//                 render={({ field }) => (
+//                   <TextField
+//                     {...field}
+//                     fullWidth
+//                     label="Meta Title"
+//                     size="small"
 //                     sx={{
-//                       borderRadius: 3,
-//                       overflow: "hidden",
-//                       position: "sticky",
-//                       top: 20,
+//                       "& .MuiOutlinedInput-root": {
+//                         borderRadius: 2,
+//                         "&:hover fieldset": {
+//                           borderColor: "primary.main",
+//                         },
+//                       },
 //                     }}
-//                   >
-//                     <CardContent sx={{ p: { xs: 3, md: 4 } }}>
-//                       <Stack
-//                         direction="row"
-//                         alignItems="center"
-//                         spacing={2}
-//                         mb={3}
-//                       >
-//                         <SettingsIcon color="primary" />
-//                         <Typography variant="h6" fontWeight="600">
-//                           SEO Settings
-//                         </Typography>
-//                       </Stack>
+//                   />
+//                 )}
+//               />
+//               <Controller
+//                 name="meta.description"
+//                 control={control}
+//                 render={({ field }) => (
+//                   <TextField
+//                     {...field}
+//                     fullWidth
+//                     label="Meta Description"
+//                     multiline
+//                     rows={3}
+//                     size="small"
+//                     sx={{
+//                       "& .MuiOutlinedInput-root": {
+//                         borderRadius: 2,
+//                         "&:hover fieldset": {
+//                           borderColor: "primary.main",
+//                         },
+//                       },
+//                     }}
+//                   />
+//                 )}
+//               />
+//               <Controller
+//                 name="meta.keywords"
+//                 control={control}
+//                 render={({ field }) => (
+//                   <TextField
+//                     {...field}
+//                     fullWidth
+//                     label="Keywords"
+//                     size="small"
+//                     sx={{
+//                       "& .MuiOutlinedInput-root": {
+//                         borderRadius: 2,
+//                         "&:hover fieldset": {
+//                           borderColor: "primary.main",
+//                         },
+//                       },
+//                     }}
+//                   />
+//                 )}
+//               />
+//               <Controller
+//                 name="meta.canonicalUrl"
+//                 control={control}
+//                 render={({ field }) => (
+//                   <TextField
+//                     {...field}
+//                     fullWidth
+//                     label="Canonical URL"
+//                     size="small"
+//                     sx={{
+//                       "& .MuiOutlinedInput-root": {
+//                         borderRadius: 2,
+//                         "&:hover fieldset": {
+//                           borderColor: "primary.main",
+//                         },
+//                       },
+//                     }}
+//                   />
+//                 )}
+//               />
+//             </Stack>
+//           </AccordionDetails>
+//         </Accordion>
 
-//                       <Accordion
-//                         elevation={0}
-//                         sx={{ "&:before": { display: "none" } }}
-//                       >
-//                         <AccordionSummary
-//                           expandIcon={<ExpandMoreIcon />}
-//                           sx={{ px: 0 }}
-//                         >
-//                           <Typography fontWeight="600">Meta Tags</Typography>
-//                         </AccordionSummary>
-//                         <AccordionDetails sx={{ px: 0 }}>
-//                           <Stack spacing={2}>
-//                             <Controller
-//                               name="meta.title"
-//                               control={control}
-//                               render={({ field }) => (
-//                                 <TextField
-//                                   {...field}
-//                                   fullWidth
-//                                   label="Meta Title"
-//                                   size="small"
-//                                   sx={{
-//                                     "& .MuiOutlinedInput-root": {
-//                                       borderRadius: 2,
-//                                       "&:hover fieldset": {
-//                                         borderColor: "primary.main",
-//                                       },
-//                                     },
-//                                   }}
-//                                 />
-//                               )}
-//                             />
-//                             <Controller
-//                               name="meta.description"
-//                               control={control}
-//                               render={({ field }) => (
-//                                 <TextField
-//                                   {...field}
-//                                   fullWidth
-//                                   label="Meta Description"
-//                                   multiline
-//                                   rows={3}
-//                                   size="small"
-//                                   sx={{
-//                                     "& .MuiOutlinedInput-root": {
-//                                       borderRadius: 2,
-//                                       "&:hover fieldset": {
-//                                         borderColor: "primary.main",
-//                                       },
-//                                     },
-//                                   }}
-//                                 />
-//                               )}
-//                             />
-//                             <Controller
-//                               name="meta.keywords"
-//                               control={control}
-//                               render={({ field }) => (
-//                                 <TextField
-//                                   {...field}
-//                                   fullWidth
-//                                   label="Keywords"
-//                                   size="small"
-//                                   sx={{
-//                                     "& .MuiOutlinedInput-root": {
-//                                       borderRadius: 2,
-//                                       "&:hover fieldset": {
-//                                         borderColor: "primary.main",
-//                                       },
-//                                     },
-//                                   }}
-//                                 />
-//                               )}
-//                             />
-//                             <Controller
-//                               name="meta.canonicalUrl"
-//                               control={control}
-//                               render={({ field }) => (
-//                                 <TextField
-//                                   {...field}
-//                                   fullWidth
-//                                   label="Canonical URL"
-//                                   size="small"
-//                                   sx={{
-//                                     "& .MuiOutlinedInput-root": {
-//                                       borderRadius: 2,
-//                                       "&:hover fieldset": {
-//                                         borderColor: "primary.main",
-//                                       },
-//                                     },
-//                                   }}
-//                                 />
-//                               )}
-//                             />
-//                           </Stack>
-//                         </AccordionDetails>
-//                       </Accordion>
-
-//                       <Accordion
-//                         elevation={0}
-//                         sx={{ "&:before": { display: "none" } }}
-//                       >
-//                         <AccordionSummary
-//                           expandIcon={<ExpandMoreIcon />}
-//                           sx={{ px: 0 }}
-//                         >
-//                           <Typography fontWeight="600">Open Graph</Typography>
-//                         </AccordionSummary>
-//                         <AccordionDetails sx={{ px: 0 }}>
-//                           <Stack spacing={2}>
-//                             <Controller
-//                               name="ogTags.title"
-//                               control={control}
-//                               render={({ field }) => (
-//                                 <TextField
-//                                   {...field}
-//                                   fullWidth
-//                                   label="OG Title"
-//                                   size="small"
-//                                   sx={{
-//                                     "& .MuiOutlinedInput-root": {
-//                                       borderRadius: 2,
-//                                       "&:hover fieldset": {
-//                                         borderColor: "primary.main",
-//                                       },
-//                                     },
-//                                   }}
-//                                 />
-//                               )}
-//                             />
-//                             <Controller
-//                               name="ogTags.description"
-//                               control={control}
-//                               render={({ field }) => (
-//                                 <TextField
-//                                   {...field}
-//                                   fullWidth
-//                                   label="OG Description"
-//                                   multiline
-//                                   rows={3}
-//                                   size="small"
-//                                   sx={{
-//                                     "& .MuiOutlinedInput-root": {
-//                                       borderRadius: 2,
-//                                       "&:hover fieldset": {
-//                                         borderColor: "primary.main",
-//                                       },
-//                                     },
-//                                   }}
-//                                 />
-//                               )}
-//                             />
-//                             <Controller
-//                               name="ogTags.image"
-//                               control={control}
-//                               render={({ field }) => (
-//                                 <TextField
-//                                   {...field}
-//                                   fullWidth
-//                                   label="OG Image URL"
-//                                   size="small"
-//                                   sx={{
-//                                     "& .MuiOutlinedInput-root": {
-//                                       borderRadius: 2,
-//                                       "&:hover fieldset": {
-//                                         borderColor: "primary.main",
-//                                       },
-//                                     },
-//                                   }}
-//                                 />
-//                               )}
-//                             />
-//                           </Stack>
-//                         </AccordionDetails>
-//                       </Accordion>
-//                       <FormControl fullWidth sx={{ mt: 3 }}>
-//                         <InputLabel>Status</InputLabel>
-//                         <Controller
-//                           name="status"
-//                           control={control}
-//                           defaultValue="Draft"
-//                           render={({ field }) => (
-//                             <Select {...field} label="Status">
-//                               <MenuItem value="Draft">Draft</MenuItem>
-//                               <MenuItem value="Published">Published</MenuItem>
-//                               <MenuItem value="Scheduled">Scheduled</MenuItem>
-//                             </Select>
-//                           )}
-//                         />
-//                       </FormControl>
-//                     </CardContent>
-//                   </Card>
-//                 </Stack>
-//               </Grid>
-//             </Grid>
+//         <Accordion
+//           elevation={0}
+//           sx={{ "&:before": { display: "none" } }}
+//         >
+//           <AccordionSummary
+//             expandIcon={<ExpandMoreIcon />}
+//             sx={{ px: 0 }}
+//           >
+//             <Typography fontWeight="600">Open Graph</Typography>
+//           </AccordionSummary>
+//           <AccordionDetails sx={{ px: 0 }}>
+//             <Stack spacing={2}>
+//               <Controller
+//                 name="ogTags.title"
+//                 control={control}
+//                 render={({ field }) => (
+//                   <TextField
+//                     {...field}
+//                     fullWidth
+//                     label="OG Title"
+//                     size="small"
+//                     sx={{
+//                       "& .MuiOutlinedInput-root": {
+//                         borderRadius: 2,
+//                         "&:hover fieldset": {
+//                           borderColor: "primary.main",
+//                         },
+//                       },
+//                     }}
+//                   />
+//                 )}
+//               />
+//               <Controller
+//                 name="ogTags.description"
+//                 control={control}
+//                 render={({ field }) => (
+//                   <TextField
+//                     {...field}
+//                     fullWidth
+//                     label="OG Description"
+//                     multiline
+//                     rows={3}
+//                     size="small"
+//                     sx={{
+//                       "& .MuiOutlinedInput-root": {
+//                         borderRadius: 2,
+//                         "&:hover fieldset": {
+//                           borderColor: "primary.main",
+//                         },
+//                       },
+//                     }}
+//                   />
+//                 )}
+//               />
+//               <Controller
+//                 name="ogTags.image"
+//                 control={control}
+//                 render={({ field }) => (
+//                   <TextField
+//                     {...field}
+//                     fullWidth
+//                     label="OG Image URL"
+//                     size="small"
+//                     sx={{
+//                       "& .MuiOutlinedInput-root": {
+//                         borderRadius: 2,
+//                         "&:hover fieldset": {
+//                           borderColor: "primary.main",
+//                         },
+//                       },
+//                     }}
+//                   />
+//                 )}
+//               />
+//             </Stack>
+//           </AccordionDetails>
+//         </Accordion>
+//         <FormControl fullWidth sx={{ mt: 3 }}>
+//           <InputLabel>Status</InputLabel>
+//           <Controller
+//             name="status"
+//             control={control}
+//             defaultValue="Draft"
+//             render={({ field }) => (
+//               <Select {...field} label="Status">
+//                 <MenuItem value="Draft">Draft</MenuItem>
+//                 <MenuItem value="Published">Published</MenuItem>
+//                 <MenuItem value="Scheduled">Scheduled</MenuItem>
+//               </Select>
+//             )}
+//           />
+//         </FormControl>
+//       </CardContent>
+//     </Card>
+//   </Stack>
+// </Grid>
+// </Grid>
 
 //             {/* Submit Button */}
 //             <Box mt={2}>
@@ -836,53 +836,7 @@
 // //   return new File([u8arr], filename, { type: mime });
 // // };
 
-// // const onSubmit = async (data) => {
-// //   try {
-// //     const formData = new FormData();
 
-// //     // Basic fields
-// //     formData.append("title", data.title);
-// //     formData.append("authorName", data.authorName);
-// //     formData.append("uid", data.uid);
-// //     formData.append("category", data.category);
-
-// //     // Tags
-// //     data.tags.forEach((tag, index) => {
-// //       formData.append(`tags[${index}]`, tag);
-// //     });
-
-// //     // Featured Image (Base64 → File)
-// //     if (data.featuredImage?.url) {
-// //       const imageFile = base64ToFile(data.featuredImage.url, 'featured-image.png');
-// //       formData.append("featuredImage", imageFile);
-// //     }
-
-// //     // Alt Text
-// //     formData.append("featuredImageAlt", data.featuredImage?.altText || "");
-
-// //     // Meta
-// //     formData.append("meta[title]", data.meta.title);
-// //     formData.append("meta[description]", data.meta.description);
-// //     formData.append("meta[keywords]", data.meta.keywords);
-// //     formData.append("meta[canonicalUrl]", data.meta.canonicalUrl);
-
-// //     // OG Tags
-// //     formData.append("ogTags[title]", data.ogTags.title);
-// //     formData.append("ogTags[description]", data.ogTags.description);
-// //     // formData.append("ogTags[image]", data.ogTags.image);
-
-// //     const res = await apiClient.post('/api/blogs', formData, {
-// //       headers: {
-// //         "Content-Type": "multipart/form-data",
-// //       },
-// //     });
-
-// //     console.log('✅ Blog created:', res.data);
-
-// //   } catch (error) {
-// //     console.error('❌ Error creating blog:', error.response?.data || error.message);
-// //   }
-// // };
 
 // //   return (
 // //     <FormProvider {...methods}>
@@ -911,37 +865,103 @@
 
 import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import { Box, Paper, Typography, Button, Card, CardContent, Stack } from "@mui/material";
+import {
+  Box,
+  Paper,
+  Typography,
+  Card,
+  CardContent,
+  Stack,
+  Grid,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+} from "@mui/material";
 import CommenTextField from "../../commen-component/TextField/TextField";
 import CommonButton from "../../commen-component/CommenButton/CommenButton";
 import CommonDropdown from "../../commen-component/CommonDropdown/CommonDropdown";
 import {
-Image as ImageIcon,
+  CloudUpload as CloudUploadIcon,
+  Add as AddIcon,
+  Delete as DeleteIcon,
+  ExpandMore as ExpandMoreIcon,
+  Article as ArticleIcon,
+  Settings as SettingsIcon,
+  Image as ImageIcon,
+  Tag as TagIcon,
+  Person as PersonIcon,
   Category as CategoryIcon,
 } from "@mui/icons-material";
 import ImageUpload from "../../commen-component/ImageUpload/ImageUpload";
+import { apiClient } from "../../lib/api-client";
+import { v4 as uuidv4 } from "uuid";
+
+const AddBlogForm = () => {
   const methods = useForm({
     defaultValues: {
-      images: [
-        {
-          url: "https://via.placeholder.com/150",
-          altText: "Sample Image",
-        },
-      ],
+      title: "",
+      author: "",
+      content: "",
+      category: "",
+      images: [],
     },
   });
+
   const categoryOptions = [
-  { value: "tech", label: "Tech" },
-  { value: "health", label: "Health" },
-];
-  const onSubmit = (data) => {
-    console.log("Submitted Blog:", data);
-  };
+    { value: "tech", label: "Tech" },
+    { value: "health", label: "Health" },
+  ];
+
+const onSubmit = async (data) => {
+  try {
+    const formData = new FormData();
+formData.append("uid", uuidv4());
+    formData.append("title", data.title);
+    formData.append("authorName", data.author); // renamed
+    formData.append("description", data.content); // renamed
+    formData.append("category", data.category);
+    formData.append("tags", JSON.stringify(data.tags || []));
+    formData.append("status", "Draft");
+
+    // Featured image
+    if (data.images?.[0]?.file) {
+      formData.append("featuredImage", data.images[0].file);
+      formData.append("featuredImageAlt", data.images[0].altText || "");
+    }
+
+    // Meta tags
+    formData.append("meta[title]", data.meta?.title || "");
+    formData.append("meta[description]", data.meta?.description || "");
+    formData.append("meta[keywords]", data.meta?.keywords || "");
+    formData.append("meta[canonicalUrl]", data.meta?.canonicalUrl || "");
+
+    // OG Tags
+    formData.append("ogTags[title]", data.ogTags?.title || "");
+    formData.append("ogTags[description]", data.ogTags?.description || "");
+    formData.append("ogTags[image]", data.ogTags?.image || "");
+
+    const response = await apiClient.post("/api/blogs", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    if (response.status === 201) {
+      // router.push("/Blogs");
+      console.log("Blog created successfully");
+    }
+  } catch (error) {
+    console.error("Error creating blog:", error);
+    alert("Failed to create blog");
+  }
+};
+
 
   const handleAddMore = () => {
     alert("Add more clicked!");
     // open modal or redirect as needed
   };
+
   return (
     <FormProvider {...methods}>
       <Box
@@ -959,28 +979,22 @@ import ImageUpload from "../../commen-component/ImageUpload/ImageUpload";
             </Typography>
 
             <form onSubmit={methods.handleSubmit(onSubmit)}>
-              <CommenTextField
-                name="title"
-                label="Blog Title"
-                required={true}
-              />
-
-              <CommenTextField name="author" label="Author" required={true} />
-
+              <CommenTextField name="title" label="Blog Title" required />
+              <CommenTextField name="author" label="Author" required />
               <CommenTextField
                 name="content"
                 label="Content"
-                required={true}
+                required
                 multiline
                 rows={6}
               />
 
-              {/*                   Category and Tags */}
+              {/* Category and Tags */}
               <Card elevation={0} sx={{ borderRadius: 3, overflow: "hidden" }}>
                 <CardContent sx={{ p: { xs: 3, md: 4 } }}>
                   <Stack direction="row" alignItems="center" spacing={2} mb={3}>
                     <CategoryIcon color="primary" />
-                    <Typography variant="h6" fontWeight="600">
+                    <Typography variant="h6" fontWeight={600}>
                       Category & Tags
                     </Typography>
                   </Stack>
@@ -989,16 +1003,44 @@ import ImageUpload from "../../commen-component/ImageUpload/ImageUpload";
                     name="category"
                     label="Category"
                     options={categoryOptions}
-                    required={true}
-                    showAddMore={true}
+                    required
+                    showAddMore
                     onAddMoreClick={handleAddMore}
                   />
                 </CardContent>
               </Card>
- {/* URL and Image */}
-                 <Card
+
+              {/* URL and Image */}
+              <Card elevation={0} sx={{ borderRadius: 3, overflow: "hidden" }}>
+                <CardContent sx={{ p: { xs: 3, md: 4 } }}>
+                  <Stack direction="row" alignItems="center" spacing={2} mb={3}>
+                    <ImageIcon color="primary" />
+                    <Typography variant="h6" fontWeight={600}>
+                      URL & Featured Image
+                    </Typography>
+                  </Stack>
+
+                  <Stack spacing={3}>
+                    <ImageUpload
+                      name="images"
+                      label="Choose Blog Images"
+                      multiple
+                      altText
+                    />
+                  </Stack>
+                </CardContent>
+              </Card>
+
+              <Grid item xs={12} lg={4}>
+                <Stack spacing={3}>
+                  <Card
                     elevation={0}
-                    sx={{ borderRadius: 3, overflow: "hidden" }}
+                    sx={{
+                      borderRadius: 3,
+                      overflow: "hidden",
+                      position: "sticky",
+                      top: 20,
+                    }}
                   >
                     <CardContent sx={{ p: { xs: 3, md: 4 } }}>
                       <Stack
@@ -1007,23 +1049,102 @@ import ImageUpload from "../../commen-component/ImageUpload/ImageUpload";
                         spacing={2}
                         mb={3}
                       >
-                        <ImageIcon color="primary" />
+                        <SettingsIcon color="primary" />
                         <Typography variant="h6" fontWeight="600">
-                          URL & Featured Image
+                          SEO Settings
                         </Typography>
                       </Stack>
 
-                      <Stack spacing={3}>
-                        <ImageUpload
-                          name="images"
-            label="Choose Blog Images"
-            multiple={true}
-            altText={true}
-                        ></ImageUpload>
-                      </Stack>
+                      {/* Meta Tags Accordion */}
+                      <Accordion
+                        elevation={0}
+                        sx={{ "&:before": { display: "none" } }}
+                      >
+                        <AccordionSummary
+                          expandIcon={<ExpandMoreIcon />}
+                          sx={{ px: 0 }}
+                        >
+                          <Typography fontWeight="600">Meta Tags</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails sx={{ px: 0 }}>
+                          <Stack spacing={2}>
+                            <CommenTextField
+                              name="meta.title"
+                              label="Meta Title"
+                              required={true}
+                            />
+                            <CommenTextField
+                              name="meta.description"
+                              label="Meta Description"
+                              multiline
+                              rows={3}
+                            />
+                            <CommenTextField
+                              name="meta.keywords"
+                              label="Keywords"
+                              required={true}
+                            />
+                            <CommenTextField
+                              name="meta.canonicalUrl"
+                              label="Canonical URL"
+                            />
+                          </Stack>
+                        </AccordionDetails>
+                      </Accordion>
 
+                      {/* OG Tags Accordion */}
+                      <Accordion
+                        elevation={0}
+                        sx={{ "&:before": { display: "none" } }}
+                      >
+                        <AccordionSummary
+                          expandIcon={<ExpandMoreIcon />}
+                          sx={{ px: 0 }}
+                        >
+                          <Typography fontWeight="600">Open Graph</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails sx={{ px: 0 }}>
+                          <Stack spacing={2}>
+                            <CommenTextField
+                              name="ogTags.title"
+                              required={true}
+                              label="OG Title"
+                            />
+                            <CommenTextField
+                              name="ogTags.description"
+                              label="OG Description"
+                              multiline
+                              rows={3}
+                            />
+                            <CommenTextField
+                              name="ogTags.image"
+                              label="OG Image URL"
+                            />
+                          </Stack>
+                        </AccordionDetails>
+                      </Accordion>
+
+                      {/* Status Select (unchanged for now) */}
+                      {/* <FormControl fullWidth sx={{ mt: 3 }}>
+                        <InputLabel>Status</InputLabel>
+                        <Controller
+                          name="status"
+                          control={control}
+                          defaultValue="Draft"
+                          render={({ field }) => (
+                            <Select {...field} label="Status">
+                              <MenuItem value="Draft">Draft</MenuItem>
+                              <MenuItem value="Published">Published</MenuItem>
+                              <MenuItem value="Scheduled">Scheduled</MenuItem>
+                            </Select>
+                          )}
+                        />
+                      </FormControl> */}
                     </CardContent>
                   </Card>
+                </Stack>
+              </Grid>
+
               <CommonButton type="submit">Submit</CommonButton>
             </form>
           </Paper>
@@ -1033,4 +1154,4 @@ import ImageUpload from "../../commen-component/ImageUpload/ImageUpload";
   );
 };
 
-export default AddBlog;
+export default AddBlogForm;

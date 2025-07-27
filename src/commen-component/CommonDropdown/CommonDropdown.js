@@ -63,7 +63,7 @@ const CommonDropdown = ({
       {error && (
         <Box mt={0.5} color="error.main" fontSize={13}>
           {error.message}
-        </Box>
+        </Box>  
       )}
     </FormControl>
   );
