@@ -72,6 +72,7 @@ const NAVIGATION = [
 const demoTheme = createTheme({
   cssVariables: {
     colorSchemeSelector: 'data-toolpad-color-scheme',
+  
   },
   colorSchemes: { light: true, dark: true },
   breakpoints: {
@@ -90,8 +91,8 @@ function DemoPageContent({ pathname }) {
     <Box
       sx={{
         width: '100%',
-        height: '100%',
-        minHeight: '100vh',
+        height: '100vh',
+      
         py: 4,
         display: 'flex',
         flexDirection: 'column',
@@ -104,9 +105,7 @@ function DemoPageContent({ pathname }) {
   );
 }
 
-DemoPageContent.propTypes = {
-  pathname: PropTypes.string.isRequired,
-};
+
 
 function Navbar(props) {
   const { window } = props;
@@ -134,11 +133,11 @@ function Navbar(props) {
       },
     };
   }, []);
-  const demoWindow = window !== undefined ? window() : undefined;
+
 
 return (
-    <DemoProvider window={demoWindow}>
-      <AppProvider sx={{ width: '100vw' , height: '100vh' }}
+    
+      <AppProvider sx={{ width: '100vw' , height: '100%' }}
         branding={{
           logo: <img src="./companylogo.png" alt="MUI logo" />,
           title: 'Admin panel',
@@ -148,13 +147,14 @@ return (
         authentication={authentication}
         navigation={NAVIGATION}
         theme={demoTheme}
-        window={demoWindow}
+        // window={demoWindow}
+        
       >
-        <DashboardLayout sx={{ width: '100%', height: '100%', p:3,flexGlow:1  }}>
+        <DashboardLayout sx={{ width: '100%', height: '111vh', p:3,flexGlow:1  }}>
           <Outlet />
         </DashboardLayout>
       </AppProvider>
-    </DemoProvider>
+ 
   );
 }
 
