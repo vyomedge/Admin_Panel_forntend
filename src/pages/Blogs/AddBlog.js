@@ -15,6 +15,7 @@ import {
 import CommenTextField from "../../commen-component/TextField/TextField";
 import CommonButton from "../../commen-component/CommenButton/CommenButton";
 import CommonDropdown from "../../commen-component/CommonDropdown/CommonDropdown";
+import ImageUpload from "../../commen-component/ImageUpload/ImageUpload";
 import {
   CloudUpload as CloudUploadIcon,
   Add as AddIcon,
@@ -27,7 +28,7 @@ import {
   Person as PersonIcon,
   Category as CategoryIcon,
 } from "@mui/icons-material";
-import ImageUpload from "../../commen-component/ImageUpload/ImageUpload";
+
 import { apiClient } from "../../lib/api-client";
 import { v4 as uuidv4 } from "uuid";
 import ReactQuill from "react-quill";
