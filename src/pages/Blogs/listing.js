@@ -50,7 +50,7 @@ export default function BlogListGrid() {
   };
 
   const handleCreate = () => {
-    navigate("/editblog/id");
+    navigate("/createblogs");
   };
 
   const columns = [
