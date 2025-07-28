@@ -31,49 +31,55 @@ import ImageUpload from "../../commen-component/ImageUpload/ImageUpload";
 import { apiClient } from "../../lib/api-client";
 import { v4 as uuidv4 } from "uuid";
 import { useParams } from "react-router-dom";
+import CommenQuillEditor from "../../commen-component/TextEditor/TextEditor";
 
 const EditBlog = () => {
   const { id } = useParams(); // assuming route = /edit/:id
-const methods = useForm({
-  defaultValues: {
-    title: '',
-    author: '',
-    content: '',
-    category: '',
-    images: [],
-    meta: {},
-    ogTags: {},
-  }
-});
-  const { reset, handleSubmit , getValues ,formState ,  } = methods;
+  const methods = useForm({
+    defaultValues: {
+      title: "",
+      author: "",
+      content: "",
+      description: "",
+      images: [],
+      meta: {},
+      ogTags: {},
+    },
+  });
+  const { reset, handleSubmit, getValues, formState } = methods;
 
   const [loading, setLoading] = useState(true);
 
-  console.log( reset  , formState )
+  console.log(reset, formState);
   const categoryOptions = [
     { value: "tech", label: "Tech" },
     { value: "health", label: "Health" },
   ];
-console.log(id)
+  console.log(id);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await apiClient.get(`/api/blogs/${id}`);
         const blog = res.data.blog;
-console.log(blog ,"Ddd")
-    const mapped = {
-      title: blog.title,
-      author: blog.authorName,
-      content: blog.description,
-      category: blog.category,
-      images: blog.featuredImage?.url
-        ? [{ url: blog.featuredImage.url, altText: blog.featuredImage.altText }]
-        : [],
-      meta: blog.meta,
-      ogTags: blog.ogTags,
-    };
-console.log(mapped)
-    reset(mapped);
+        console.log(blog, "Ddd");
+        const mapped = {
+          title: blog.title,
+          author: blog.authorName,
+          description: blog.description,
+          category: blog.category,
+          images: blog.featuredImage?.url
+            ? [
+                {
+                  url: blog.featuredImage.url,
+                  altText: blog.featuredImage.altText,
+                },
+              ]
+            : [],
+          meta: blog.meta,
+          ogTags: blog.ogTags,
+        };
+        console.log(mapped);
+        reset(mapped);
         setLoading(false);
       } catch (err) {
         console.error("Failed to fetch blog:", err);
@@ -89,7 +95,7 @@ console.log(mapped)
 
       formData.append("title", data.title);
       formData.append("authorName", data.author);
-      formData.append("description", data.content);
+      formData.append("description", data.description);
       formData.append("category", data.category);
       formData.append("tags", JSON.stringify(data.tags || []));
       formData.append("status", "Draft");
@@ -135,7 +141,7 @@ console.log(mapped)
   if (loading) return <Typography>Loading...</Typography>;
 
   return (
-       <FormProvider {...methods}>
+    <FormProvider {...methods}>
       <Box
         sx={{
           minHeight: "100vh",
@@ -153,12 +159,12 @@ console.log(mapped)
             <form onSubmit={methods.handleSubmit(onSubmit)}>
               <CommenTextField name="title" label="Blog Title" required />
               <CommenTextField name="author" label="Author" required />
-              <CommenTextField
-                name="content"
-                label="Content"
+              <CommenQuillEditor
+                name="description"
+                label="Description"
                 required
-                multiline
-                rows={6}
+                minLength={30}
+                placeholder="Write blog content here..."
               />
 
               {/* Category and Tags */}

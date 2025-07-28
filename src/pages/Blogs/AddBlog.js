@@ -32,12 +32,13 @@ import { apiClient } from "../../lib/api-client";
 import { v4 as uuidv4 } from "uuid";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import CommenQuillEditor from "../../commen-component/TextEditor/TextEditor";
 const AddBlogForm = () => {
   const methods = useForm({
     defaultValues: {
       title: "",
       author: "",
-      content: "",
+      description: "",
       category: "",
       images: [],
     },
@@ -54,7 +55,7 @@ const AddBlogForm = () => {
       formData.append("uid", uuidv4());
       formData.append("title", data.title);
       formData.append("authorName", data.author);
-      formData.append("description", data.content);
+      formData.append("description", data.description);
       formData.append("category", data.category);
       formData.append("tags", JSON.stringify(data.tags || []));
       formData.append("status", "Draft");
@@ -117,18 +118,14 @@ const AddBlogForm = () => {
                 <form onSubmit={methods.handleSubmit(onSubmit)}>
                   <CommenTextField name="title" label="Blog Title" required />
                   <CommenTextField name="author" label="Author" required />
-                  <CommenTextField
-                    name="content"
-                    label="Content"
+                  <CommenQuillEditor
+                    name="description"
+                    label="Description"
                     required
-                    multiline
-                    rows={10}
+                    minLength={30}
+                    placeholder="Write blog content here..."
                   />
-                  {/* <ReactQuill
-//             className="custom-quill"
-            
-//           /> */}
-                  {/* Category and Tags */}
+
                   <Card elevation={1} sx={{ borderRadius: 3, mt: 4 }}>
                     <CardContent sx={{ p: { xs: 3, md: 4 } }}>
                       <Stack
@@ -153,8 +150,6 @@ const AddBlogForm = () => {
                       />
                     </CardContent>
                   </Card>
-
-                  {/* URL and Image */}
                   <Card elevation={1} sx={{ borderRadius: 3, mt: 4 }}>
                     <CardContent sx={{ p: { xs: 3, md: 4 } }}>
                       <Stack
@@ -171,7 +166,7 @@ const AddBlogForm = () => {
 
                       <Box
                         sx={{
-                          border: "2px dashed #d1d5db", // 🌟 Styled like Tailwind
+                          border: "2px dashed #d1d5db",
                           p: 4,
                           borderRadius: 2,
                           textAlign: "center",
