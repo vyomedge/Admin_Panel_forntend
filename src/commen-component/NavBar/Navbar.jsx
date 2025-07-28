@@ -38,9 +38,11 @@ const NAVIGATION = [
     title: 'Services',
     icon: <DashboardIcon />
   },
-  // {
-  //   kind: 'divider',
-  // },
+  {
+      segment: 'category',
+    title: 'category',
+    icon: <DashboardIcon />
+  },
   // {
   //   kind: 'header',
   //   title: 'Analytics',

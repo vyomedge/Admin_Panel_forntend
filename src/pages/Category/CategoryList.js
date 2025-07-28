@@ -1,52 +1,83 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Card, CardContent, Typography, CardMedia, IconButton } from "@mui/material";
+import { Box, IconButton, Tooltip } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import { Edit, Delete } from "@mui/icons-material";
 import { apiClient } from "../../lib/api-client";
 
-const CategoryList = () => {
-  const [categories, setCategories] = useState([]);
+const CategoryDataGrid = ({ onEdit }) => {
+  const [rows, setRows] = useState([]);
+
+  const fetchCategories = async () => {
+    const res = await apiClient.get("/api/category");
+    const formatted = res.data.map((item, index) => ({
+      id: item._id,
+      sr: index + 1,
+      name: item.name,
+      description: item.description,
+      metaTitle: item.metaTitle,
+      metaDescription: item.metaDescription,
+      image: item.image,
+    }));
+    setRows(formatted);
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await apiClient.get("/api/category");
-      setCategories(res.data);
-    };
-    fetchData();
+    fetchCategories();
   }, []);
 
   const handleDelete = async (id) => {
     await apiClient.delete(`/api/category/${id}`);
-    setCategories(prev => prev.filter(cat => cat._id !== id));
+    setRows((prev) => prev.filter((row) => row.id !== id));
   };
 
+  const columns = [
+    { field: "sr", headerName: "Sr", width: 70 },
+    { field: "name", headerName: "Name", flex: 1 },
+    { field: "description", headerName: "Description", flex: 1.5 },
+    { field: "metaTitle", headerName: "Meta Title", flex: 1 },
+    { field: "metaDescription", headerName: "Meta Description", flex: 1.5 },
+    {
+      field: "actions",
+      headerName: "Actions",
+      width: 120,
+      sortable: false,
+      filterable: false,
+      renderCell: (params) => (
+        <Box display="flex" gap={1}>
+          <Tooltip title="Edit">
+            <IconButton
+              size="small"
+              color="primary"
+              onClick={() => onEdit && onEdit(params.row)}
+            >
+              <Edit fontSize="small" />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Delete">
+            <IconButton
+              size="small"
+              color="error"
+              onClick={() => handleDelete(params.row.id)}
+            >
+              <Delete fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        </Box>
+      ),
+    },
+  ];
+
   return (
-    <Grid container spacing={2}>
-      {categories.map((cat) => (
-        <Grid item xs={12} sm={6} md={4} key={cat._id}>
-          <Card>
-            {cat.image && (
-              <CardMedia
-                component="img"
-                height="140"
-                image={cat.image}
-                alt={cat.name}
-              />
-            )}
-            <CardContent>
-              <Typography variant="h6">{cat.name}</Typography>
-              <Typography variant="body2">{cat.description}</Typography>
-              <IconButton color="primary" onClick={() => console.log("Edit", cat._id)}>
-                <Edit />
-              </IconButton>
-              <IconButton color="error" onClick={() => handleDelete(cat._id)}>
-                <Delete />
-              </IconButton>
-            </CardContent>
-          </Card>
-        </Grid>
-      ))}
-    </Grid>
+    <Box sx={{ height: 600, width: "100%", p: 2 }}>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        pageSize={10}
+        rowsPerPageOptions={[10, 20, 50]}
+        disableRowSelectionOnClick
+      />
+    </Box>
   );
 };
 
-export default CategoryList;
+export default CategoryDataGrid;
