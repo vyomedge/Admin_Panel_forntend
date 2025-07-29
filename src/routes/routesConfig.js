@@ -11,6 +11,8 @@ import EditBlog from "../pages/Blogs/Edit";
 import CategoryList from "../pages/Category/CategoryList";
 import AddCategory from "../pages/Category/AddCategory";
 import EditCategory from "../pages/Category/EditCategory";
+import PortfolioPage from "../pages/Portfolio/Portfolio";
+import AddPortfolioPage from "../pages/Portfolio/AddPortfolioPage";
 const routesConfig = [
   {
     element: <Layout1 />,
@@ -50,7 +52,7 @@ const routesConfig = [
       },
     ],
   },
-    {
+  {
     element: (
       <ProtectedRoute>
         <Layout2 />
@@ -69,7 +71,27 @@ const routesConfig = [
         path: "/categoryedit/:id",
         element: <RoutingList Component={EditCategory} />,
       },
-
+    ],
+  },
+   {
+    element: (
+      <ProtectedRoute>
+        <Layout2 />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        path: "/portfolio",
+        element: <RoutingList Component={PortfolioPage} />,
+      },
+      {
+        path: "/addportfolio",
+        element: <RoutingList Component={AddPortfolioPage} />,
+      },
+      // {
+      //   path: "/categoryedit/:id",
+      //   element: <RoutingList Component={EditCategory} />,
+      // },
     ],
   },
 ];
