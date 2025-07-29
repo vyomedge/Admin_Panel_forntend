@@ -32,8 +32,9 @@ const CategoryDataGrid = () => {
     setRows((prev) => prev.filter((row) => row.id !== id));
   };
   const handleEdit= async  (onEdit) =>{
-    console.log(onEdit)
+    navigate(`/categoryedit/${onEdit.id}`)
   }
+
 
   const columns = [
     { field: "sr", headerName: "Sr", width: 70 },
@@ -78,7 +79,7 @@ const CategoryDataGrid = () => {
   return (
     <Box sx={{ height: 600, width: "100%", p: 2 }}>
          <Stack direction="row" justifyContent="space-between" mb={2}>
-        <Typography variant="h5">Blogs</Typography>
+        <Typography variant="h5">Category</Typography>
         <Button
           variant="contained"
           color="primary"
