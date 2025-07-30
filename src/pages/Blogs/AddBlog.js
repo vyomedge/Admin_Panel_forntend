@@ -86,6 +86,7 @@ const AddBlogForm = () => {
       if (response.status === 201) {
         console.log("Blog created successfully");
         setLoading(false)
+        navigate("/blogs");
       }
     } catch (error) {
       console.error("Error creating blog:", error);
