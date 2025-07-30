@@ -11,6 +11,7 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  CircularProgress,
 } from "@mui/material";
 import CommenTextField from "../../commen-component/TextField/TextField";
 import CommonButton from "../../commen-component/CommenButton/CommenButton";
@@ -110,35 +111,60 @@ const AddBlogForm = () => {
 
   return (
     <FormProvider {...methods}>
+      <CircularProgress />
       <Box
         sx={{
-          minHeight: "100vh",
-          py: 4,
-          px: 2,
+          minHeight: "100vh", 
+          py: 0,
+          px: 0,
+          // bgcolor: "dark" ? "white" : "#F7F7F9",
+        transition: "background 0.3s",
         }}
       >
-        <Box maxWidth="1200px" mx="auto">
-          <Grid container spacing={4}>
+        <Box maxWidth="xl" mx="auto">
+          <Grid container spacing={2} sx={{
+            flexDirection: { xs: "column", md: "row" },
+            alignItems: "stretch",
+          }}>
             {/* Left Section */}
-            <Grid item xs={12} lg={9}>
-              <Paper sx={{ p: 4, borderRadius: 3 }}>
+            <Grid item xs={12} md={6} sx={{
+              width: { xs: "100%", md: "50%" },
+              display: "flex",
+              flexDirection: "column",
+            }}>
+              <Paper sx={{ borderRadius: 3, p: { xs: 2, md: 3 }, height: "100%" }}>
                 <Typography variant="h5" gutterBottom>
                   Add New Blog
                 </Typography>
 
                 <form onSubmit={methods.handleSubmit(onSubmit)}>
-                  <CommenTextField name="title" label="Blog Title" required />
-                  <CommenTextField name="author" label="Author" required />
-                  <CommenQuillEditor
-                    name="description"
-                    label="Description"
-                    required
-                    minLength={30}
-                    placeholder="Write blog content here..."
-                  />
+                  <Card
+                    elevation={2}
+                    sx={{ borderRadius: 3, mb: 4, padding: { xs: 3, md: 2 } }}
+                  >
+                    <CommenTextField
+                      name="title"
+                      label="Blog Title"
+                      required
+                      size="small"
+                    />
+                    <CommenTextField
+                      name="author"
+                      label="Author"
+                      required
+                      size="small"
+                    />
+                    <CommenQuillEditor
+                      name="description"
+                      label="Description"
+                      required
+                      minLength={30}
+                      placeholder="Write blog content here..."
+                    />
+                  </Card>
 
-                  <Card elevation={1} sx={{ borderRadius: 3, mt: 4 }}>
-                    <CardContent sx={{ p: { xs: 3, md: 4 } }}>
+                  <Card elevation={2} sx={{ borderRadius: 3, mt: 4 }}>
+                    <CardContent sx={{ p: { xs: 3, md: 2 } }}>
                       <Stack
                         direction="row"
                         alignItems="center"
@@ -161,13 +187,14 @@ const AddBlogForm = () => {
                       />
                     </CardContent>
                   </Card>
-                  <Card elevation={1} sx={{ borderRadius: 3, mt: 4 }}>
-                    <CardContent sx={{ p: { xs: 3, md: 4 } }}>
+
+                  <Card elevation={2} sx={{ borderRadius: 3, mt: 4 }}>
+                    <CardContent sx={{ p: { xs: 3, md: 2 } }}>
                       <Stack
                         direction="row"
                         alignItems="center"
                         spacing={2}
-                        mb={3}
+                        mb={1}
                       >
                         <ImageIcon color="primary" />
                         <Typography variant="h6" fontWeight={600}>
@@ -195,131 +222,104 @@ const AddBlogForm = () => {
                           color="text.secondary"
                           mt={2}
                         >
-                          PNG, JPG, GIF up to 10MB
+                          PNG, JPG, GIF up to 100KB
                         </Typography>
                       </Box>
                     </CardContent>
                   </Card>
-
                   <Box mt={4}>
-                    <CommonButton type="submit">Submit</CommonButton>
+                  <CommonButton
+                    sx={{
+                      borderRadius: 10,
+                      width: { xs: "100%", md: "50%" },
+                    }}
+                    type="submit"
+                  >
+                    Submit
+                  </CommonButton>
                   </Box>
                 </form>
               </Paper>
             </Grid>
 
-            {/* 🌟 Right Section - Changed width to lg=3 */}
-            <Grid item xs={12} lg={3}>
-              <Stack spacing={3}>
-                <Card
-                  elevation={1}
-                  sx={{
-                    borderRadius: 3,
-                    position: "sticky",
-                    top: 20,
-                  }}
-                >
-                  <CardContent sx={{ p: { xs: 3, md: 4 } }}>
-                    <Stack
-                      direction="row"
-                      alignItems="center"
-                      spacing={2}
-                      mb={3}
-                    >
-                      <SettingsIcon color="primary" />
-                      <Typography variant="h6" fontWeight="600">
-                        SEO Settings
-                      </Typography>
-                    </Stack>
-                    {/* Meta Tags Accordion */}
-                    <Accordion
-                      elevation={0}
-                      sx={{ "&:before": { display: "none" } }}
-                    >
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        sx={{ px: 0 }}
-                      >
-                        <Typography fontWeight="600">Meta Tags</Typography>
-                      </AccordionSummary>
-                      <AccordionDetails sx={{ px: 0 }}>
-                        <Stack spacing={2}>
-                          <CommenTextField
-                            name="meta.title"
-                            label="Meta Title"
-                            required
-                          />
-                          <CommenTextField
-                            name="meta.description"
-                            label="Meta Description"
-                            multiline
-                            rows={3}
-                          />
-                          <CommenTextField
-                            name="meta.keywords"
-                            label="Keywords"
-                            required
-                          />
-                          <CommenTextField
-                            name="meta.canonicalUrl"
-                            label="Canonical URL"
-                          />
-                        </Stack>
-                      </AccordionDetails>
-                    </Accordion>
-                    {/* OG Tags Accordion */}
-                    <Accordion
-                      elevation={0}
-                      sx={{ "&:before": { display: "none" } }}
-                    >
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        sx={{ px: 0 }}
-                      >
-                        <Typography fontWeight="600">Open Graph</Typography>
-                      </AccordionSummary>
-                      <AccordionDetails sx={{ px: 0 }}>
-                        <Stack spacing={2}>
-                          <CommenTextField
-                            name="ogTags.title"
-                            required
-                            label="OG Title"
-                          />
-                          <CommenTextField
-                            name="ogTags.description"
-                            label="OG Description"
-                            multiline
-                            rows={3}
-                          />
-                          <CommenTextField
-                            name="ogTags.image"
-                            label="OG Image URL"
-                          />
-                        </Stack>
-                      </AccordionDetails>
-                    </Accordion>
-                    {/* Status Select (unchanged for now) */}
-                    //{" "}
-                    {/* <FormControl fullWidth sx={{ mt: 3 }}>
-//                         <InputLabel>Status</InputLabel>
-//                         <Controller
-//                           name="status"
-//                           control={control}
-//                           defaultValue="Draft"
-//                           render={({ field }) => (
-//                             <Select {...field} label="Status">
-//                               <MenuItem value="Draft">Draft</MenuItem>
-//                               <MenuItem value="Published">Published</MenuItem>
-//                               <MenuItem value="Scheduled">Scheduled</MenuItem>
-//                             </Select>
-//                           )}
-//                         />
-//                       </FormControl> */}
-                  </CardContent>
-                </Card>
-              </Stack>
+            {/* Right Section */}
+            <Grid item xs={12} md={6} sx={{
+              width: { xs: "100%", md: "45%" },
+              display: "flex",
+              flexDirection: "column",
+            }}>
+              <Card
+                elevation={1}
+                sx={{
+                  borderRadius: 3,
+                 position: { md: "sticky" },
+                top: { md: 20 },
+                minHeight: { md: "calc(100vh - 40px)" },
+                  height: "100%",
+                  boxShadow: "dark" ? 8 : 2,
+                }}
+              >
+                <CardContent sx={{ p: { xs: 3, md: 4 } }}>
+                  {/* <SettingsIcon color="primary" /> */}
+                  <Typography variant="h6" fontWeight="600">
+                    SEO Settings
+                  </Typography>
+
+                  {/* Meta Tags Accordion */}
+                  
+
+                  <Card
+                    elevation={1}
+                    sx={{ borderRadius: 3, mb: 4, padding: { xs: 3, md: 2 } }}
+                  >
+                    <Typography fontWeight="600">Meta Tags</Typography>
+                    <CommenTextField
+                      name="meta.title"
+                      label="Meta Title"
+                      required
+                    />
+                    <CommenTextField
+                      name="meta.description"
+                      label="Meta Description"
+                      multiline
+                      rows={3}
+                    />
+                    <CommenTextField
+                      name="meta.keywords"
+                      label="Keywords"
+                      required
+                    />
+                    <CommenTextField
+                      name="meta.canonicalUrl"
+                      label="Canonical URL"
+                    />
+                  </Card>
+
+                  {/* OG Tags Accordion */}
+                  
+                  <Card
+                    elevation={1}
+                    sx={{ borderRadius: 3, mb: 4, padding: { xs: 3, md: 2 } }}
+                  >
+                    <Typography fontWeight="600">Open Graph</Typography>
+                  <CommenTextField
+                    name="ogTags.title"
+                    required
+                    label="OG Title"
+                  />
+                  <CommenTextField
+                    name="ogTags.description"
+                    label="OG Description"
+                    multiline
+                    rows={3}
+                  />
+                  <CommenTextField name="ogTags.image" label="OG Image URL" />
+                  </Card>
+                </CardContent>
+              </Card>
             </Grid>
           </Grid>
+           
         </Box>
       </Box>
     </FormProvider>
