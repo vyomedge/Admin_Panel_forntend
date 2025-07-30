@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import {
   Box,
@@ -16,6 +16,7 @@ import {
 import CommenTextField from "../../commen-component/TextField/TextField";
 import CommonButton from "../../commen-component/CommenButton/CommenButton";
 import CommonDropdown from "../../commen-component/CommonDropdown/CommonDropdown";
+import ImageUpload from "../../commen-component/ImageUpload/ImageUpload";
 import {
   CloudUpload as CloudUploadIcon,
   Add as AddIcon,
@@ -28,13 +29,14 @@ import {
   Person as PersonIcon,
   Category as CategoryIcon,
 } from "@mui/icons-material";
-import ImageUpload from "../../commen-component/ImageUpload/ImageUpload";
+
 import { apiClient } from "../../lib/api-client";
 import { v4 as uuidv4 } from "uuid";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import CommenQuillEditor from "../../commen-component/TextEditor/TextEditor";
 const AddBlogForm = () => {
+  const [categoryOptions, setCategoryOptions] = useState([]);
   const methods = useForm({
     defaultValues: {
       title: "",
@@ -45,12 +47,13 @@ const AddBlogForm = () => {
     },
   });
 
-  const categoryOptions = [
-    { value: "tech", label: "Tech" },
-    { value: "health", label: "Health" },
-  ];
+  // const categoryOptions = [
+  //   { value: "tech", label: "Tech" },
+  //   { value: "health", label: "Health" },
+  // ];
 
   const onSubmit = async (data) => {
+    console.log(data);
     try {
       const formData = new FormData();
       formData.append("uid", uuidv4());
@@ -61,19 +64,16 @@ const AddBlogForm = () => {
       formData.append("tags", JSON.stringify(data.tags || []));
       formData.append("status", "Draft");
 
-      // Featured image
       if (data.images?.[0]?.file) {
         formData.append("featuredImage", data.images[0].file);
         formData.append("featuredImageAlt", data.images[0].altText || "");
       }
 
-      // Meta tags
       formData.append("meta[title]", data.meta?.title || "");
       formData.append("meta[description]", data.meta?.description || "");
       formData.append("meta[keywords]", data.meta?.keywords || "");
       formData.append("meta[canonicalUrl]", data.meta?.canonicalUrl || "");
 
-      // OG Tags
       formData.append("ogTags[title]", data.ogTags?.title || "");
       formData.append("ogTags[description]", data.ogTags?.description || "");
       formData.append("ogTags[image]", data.ogTags?.image || "");
@@ -95,8 +95,19 @@ const AddBlogForm = () => {
 
   const handleAddMore = () => {
     alert("Add more clicked!");
-    // open modal or redirect as needed
   };
+
+  useEffect(() => {
+    apiClient.get("/api/category").then((data) => {
+      console.log(data.data);
+     const option = data.data.map((category) => ({
+        value: category._id,
+        label: category.name,
+      }));
+
+      setCategoryOptions (option)
+    });
+  }, []);
 
   return (
     <FormProvider {...methods}>

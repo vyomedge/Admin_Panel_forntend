@@ -8,7 +8,11 @@ import PublicRoute from "../components/PublicRoute";
 import Blog from "../pages/Blogs/listing";
 import AddBlogs from "../pages/Blogs/AddBlog";
 import EditBlog from "../pages/Blogs/Edit";
-
+import CategoryList from "../pages/Category/CategoryList";
+import AddCategory from "../pages/Category/AddCategory";
+import EditCategory from "../pages/Category/EditCategory";
+import PortfolioPage from "../pages/Portfolio/Portfolio";
+import AddPortfolioPage from "../pages/Portfolio/AddPortfolioPage";
 const routesConfig = [
   {
     element: <Layout1 />,
@@ -46,6 +50,48 @@ const routesConfig = [
         path: "/editblog/:id",
         element: <RoutingList Component={EditBlog} />,
       },
+    ],
+  },
+  {
+    element: (
+      <ProtectedRoute>
+        <Layout2 />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        path: "/category",
+        element: <RoutingList Component={CategoryList} />,
+      },
+      {
+        path: "/categoryadd",
+        element: <RoutingList Component={AddCategory} />,
+      },
+      {
+        path: "/categoryedit/:id",
+        element: <RoutingList Component={EditCategory} />,
+      },
+    ],
+  },
+   {
+    element: (
+      <ProtectedRoute>
+        <Layout2 />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        path: "/portfolio",
+        element: <RoutingList Component={PortfolioPage} />,
+      },
+      {
+        path: "/addportfolio",
+        element: <RoutingList Component={AddPortfolioPage} />,
+      },
+      // {
+      //   path: "/categoryedit/:id",
+      //   element: <RoutingList Component={EditCategory} />,
+      // },
     ],
   },
 ];

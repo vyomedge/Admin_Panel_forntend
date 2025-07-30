@@ -46,7 +46,7 @@ const CommonDropdown = ({
               </MenuItem>
             ))}
 
-            {showAddMore && (
+            {/* {showAddMore && (
               <MenuItem
                 value="__add_more__"
                 onClick={(e) => {
@@ -56,12 +56,13 @@ const CommonDropdown = ({
               >
                 ➕ Add More
               </MenuItem>
-            )}
+            )} */}
           </Select>
         )}
       />
       {error && (
         <Box mt={0.5} color="error.main" fontSize={13}>
+          
           {error.message}
         </Box>  
       )}
