@@ -8,10 +8,6 @@ import {
   CardContent,
   Stack,
   Grid,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  CircularProgress,
 } from "@mui/material";
 import CommenTextField from "../../commen-component/TextField/TextField";
 import CommonButton from "../../commen-component/CommenButton/CommenButton";
@@ -35,8 +31,11 @@ import { v4 as uuidv4 } from "uuid";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import CommenQuillEditor from "../../commen-component/TextEditor/TextEditor";
+import { useNavigate } from "react-router-dom";
 const AddBlogForm = () => {
   const [categoryOptions, setCategoryOptions] = useState([]);
+  const [loading,setLoading]  = useState(false)
+  const navigate = useNavigate();
   const methods = useForm({
     defaultValues: {
       title: "",
@@ -86,6 +85,7 @@ const AddBlogForm = () => {
 
       if (response.status === 201) {
         console.log("Blog created successfully");
+        setLoading(false)
       }
     } catch (error) {
       console.error("Error creating blog:", error);
@@ -100,6 +100,7 @@ const AddBlogForm = () => {
   useEffect(() => {
     apiClient.get("/api/category").then((data) => {
       console.log(data.data);
+
      const option = data.data.map((category) => ({
         value: category._id,
         label: category.name,
@@ -111,7 +112,7 @@ const AddBlogForm = () => {
 
   return (
     <FormProvider {...methods}>
-      <CircularProgress />
+   
       <Box
         sx={{
           minHeight: "100vh", 
@@ -228,12 +229,15 @@ const AddBlogForm = () => {
                     </CardContent>
                   </Card>
                   <Box mt={4}>
-                  <CommonButton
+                  <CommonButton 
                     sx={{
                       borderRadius: 10,
                       width: { xs: "100%", md: "50%" },
                     }}
+                    loading={loading} 
                     type="submit"
+                    
+                    
                   >
                     Submit
                   </CommonButton>
@@ -327,3 +331,4 @@ const AddBlogForm = () => {
 };
 
 export default AddBlogForm;
+

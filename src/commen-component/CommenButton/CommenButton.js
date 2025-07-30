@@ -1,5 +1,5 @@
-import React from "react";
-import { Button } from "@mui/material";
+import React, { use, useState } from "react";
+import { Button, CircularProgress } from "@mui/material";
 
 const CommonButton = ({
   children,
@@ -8,8 +8,10 @@ const CommonButton = ({
   variant = "contained",
   onClick,
   sx = {},
+  lodaing = false,
   ...rest
 }) => {
+  
   return (
     <Button
       type={type}
@@ -17,9 +19,12 @@ const CommonButton = ({
       fullWidth={fullWidth}
       onClick={onClick}
       sx={{ mt: 2, ...sx }}
+      disabled={lodaing || rest.disabled}
+  
       {...rest}
     >
-      {children}
+    {lodaing?(<><CircularProgress size={20}/>Loading...</>):(children)}
+     
     </Button>
   );
 };
