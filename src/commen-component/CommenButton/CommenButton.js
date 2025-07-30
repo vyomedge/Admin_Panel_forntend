@@ -8,7 +8,7 @@ const CommonButton = ({
   variant = "contained",
   onClick,
   sx = {},
-  lodaing = false,
+  loading = false,
   ...rest
 }) => {
   
@@ -19,11 +19,11 @@ const CommonButton = ({
       fullWidth={fullWidth}
       onClick={onClick}
       sx={{ mt: 2, ...sx }}
-      disabled={lodaing || rest.disabled}
+      disabled={loading || rest.disabled}
   
       {...rest}
     >
-    {lodaing?(<><CircularProgress size={20}/>Loading...</>):(children)}
+    {loading ? (<><CircularProgress size={20} sx={{mr:1}}/>Loading...</>) : (children)}
      
     </Button>
   );

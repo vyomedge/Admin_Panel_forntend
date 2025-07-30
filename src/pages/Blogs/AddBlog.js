@@ -82,7 +82,7 @@ const AddBlogForm = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-
+        setLoading(true);
       if (response.status === 201) {
         console.log("Blog created successfully");
         setLoading(false)
@@ -90,6 +90,7 @@ const AddBlogForm = () => {
       }
     } catch (error) {
       console.error("Error creating blog:", error);
+      setLoading(false)
       alert("Failed to create blog");
     }
   };
