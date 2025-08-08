@@ -62,7 +62,7 @@ const CommenQuillEditor = ({
               className="custom-quill"
               placeholder={placeholder}
               onChange={(content) => field.onChange(content)}
-              style={{ backgroundColor: "#fff" }}
+              // style={{ backgroundColor: "#fff" }}
             />
             {error && (
               <Typography variant="caption" color="error" sx={{ mt: 1 }}>

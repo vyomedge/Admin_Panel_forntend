@@ -18,12 +18,13 @@ const CommonButton = ({
       variant={variant}
       fullWidth={fullWidth}
       onClick={onClick}
-      sx={{ mt: 2, ...sx }}
+      sx={{ ...sx }}
       disabled={loading || rest.disabled}
-  
+      loading={loading}
       {...rest}
     >
-    {loading ? (<><CircularProgress size={20} sx={{mr:1}}/>Loading...</>) : (children)}
+    {/* {loading ? (<><CircularProgress size={20} sx={{mr:1}}/>Loading...</>) : (children)} */}
+    {children}
      
     </Button>
   );

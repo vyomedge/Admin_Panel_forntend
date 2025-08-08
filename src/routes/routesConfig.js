@@ -13,6 +13,9 @@ import AddCategory from "../pages/Category/AddCategory";
 import EditCategory from "../pages/Category/EditCategory";
 import PortfolioPage from "../pages/Portfolio/Portfolio";
 import AddPortfolioPage from "../pages/Portfolio/AddPortfolioPage";
+import CategoryServicesList from "../pages/CategoryServices/CategoryServicesList";
+import CreateCategoryServices from "../pages/CategoryServices/CreateCategoryServices";
+import EditCategoryServices from "../pages/CategoryServices/EditCategoryServices";
 const routesConfig = [
   {
     element: <Layout1 />,
@@ -73,7 +76,7 @@ const routesConfig = [
       },
     ],
   },
-   {
+  {
     element: (
       <ProtectedRoute>
         <Layout2 />
@@ -92,6 +95,27 @@ const routesConfig = [
       //   path: "/categoryedit/:id",
       //   element: <RoutingList Component={EditCategory} />,
       // },
+    ],
+  },
+  {
+    element: (
+      <ProtectedRoute>
+        <Layout2 />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        path: "/categoryservices",
+        element: <RoutingList Component={CategoryServicesList} />,
+      },
+      {
+        path: "/createcategoryservices",
+        element: <RoutingList Component={CreateCategoryServices} />,
+      },
+      {
+        path: "/editcategoryservices/:id",
+        element: <RoutingList Component={EditCategoryServices} />,
+      },
     ],
   },
 ];
